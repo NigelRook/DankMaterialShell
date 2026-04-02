@@ -106,13 +106,22 @@ Rectangle {
         return Math.round(value / 60000) + " minutes";
     }
 
-    Column {
-        id: contentColumn
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.margins: Theme.spacingL
-        spacing: Theme.spacingM
+    Flickable {
+        id: settingsFlickable
+        anchors.fill: parent
+        contentHeight: contentColumn.height + Theme.spacingL * 2
+        clip: true
+        flickableDirection: Flickable.VerticalFlick
+        boundsBehavior: Flickable.DragAndOvershootBounds
+        interactive: root.naturalContentHeight > root.height
+
+        Column {
+            id: contentColumn
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: Theme.spacingL
+            spacing: Theme.spacingM
 
         StyledText {
             text: I18n.tr("Notification Settings")
@@ -421,5 +430,6 @@ Rectangle {
                 onToggled: toggled => SettingsData.set("notificationHistorySaveCritical", toggled)
             }
         }
+    }
     }
 }
